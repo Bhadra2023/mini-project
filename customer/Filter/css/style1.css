@@ -1,0 +1,36 @@
+Example
+.navbar{
+  display: flex;
+  align-items: center;
+  padding: 20px;	
+background-color: rgb(255, 254, 254);
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  
+  display: inline-block;
+  list-style-type: none;
+}
+
+li {
+  float: right;
+  display: inline-block;
+    margin-right: 20px;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  color: #111;
+}
