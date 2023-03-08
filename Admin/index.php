@@ -124,6 +124,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <ul class="sub">
                     <li><a href="employeeview.php">employee</a></li>
                     <li><a href="request.php">employee leave request</a></li>
+                    <li><a href="view_delivery.php">Courier Agency request</a></li>
+
 						<li><a href="categoryview.php">Category</a></li>
                         <li><a href="subcategoryview.php">subcategory</a></li>
 						<li><a href="productvieww.php">Product</a></li>

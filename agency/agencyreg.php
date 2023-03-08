@@ -91,7 +91,7 @@ $conn->close();
             <!-- <img src="images/sell-bg.jpg" alt=""> -->
             <div class="container">
                 <div class="signup-content">
-                    <form method="POST" id="signup-form" class="signup-form" action="">
+                    <form method="POST" id="signup-form" class="signup-form" action="../login/login.php">
                         <h2 class="form-title">Create account</h2>
                         <div class="form-group">
                             <input type="text" class="form-input" name="name" id="name" placeholder="AgencyName" required onkeyup="validateName()" autocomplete="off"/>
