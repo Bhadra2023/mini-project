@@ -73,6 +73,8 @@
                                     <ul class="dropdown-menu">
                                        <li class="nav-item"><a class="nav-link" href="./cust_reg/add_cust.php">Customer</a></li>
                                        <li class="nav-item"><a class="nav-link" href="./employee/emp_reg.php">Employee</a></li>
+                                       <li class="nav-item"><a class="nav-link" href="./agency/agencyreg.php">Courier Agent</a></li>
+
                                     </ul>
                               </nav>
                            </div>

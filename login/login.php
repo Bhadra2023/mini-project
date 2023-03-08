@@ -63,7 +63,7 @@ if($val==4){
 	if($s==1){
 		$_SESSION['email']= $email;
 		$_SESSION['login_id']= $res["login_id"];
-		header('location:courier/index.php');
+		header('location:agency/agencyreg.php');
 	}elseif($s==0){
 		echo "<script>alert('Yet to be verified By Admin!');</script>";
 	}else{

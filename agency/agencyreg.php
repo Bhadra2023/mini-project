@@ -11,11 +11,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
 if(isset($_POST['submit']))
 {
-$seller_name = $_POST['name'];
-$seller_phn = $_POST['mobile'];  
+$agencyname= $_POST['name'];
+$district = $_POST['district'];  
+$phone=$_POST['phone'];
 $email = $_POST['email'];
 $pswd = $_POST['password'];
-$type=3;
+$type=4;
 // if(!preg_match("/^[a-zA-Z]+$/", $seller_name)){
 //   echo"<script>alert('Enter correct name');window.location='index.html'</script>";
 // }
@@ -42,27 +43,28 @@ $type=3;
 // if($pswd != $cnfm_pswd){
 //   echo"<script>alert('Passwords doesn't match');window.location='index.html'</script>";
 // }
-$check_email = mysqli_query($conn, "SELECT email FROM `tbl_seller` where email = '$email' ");
+$check_email = mysqli_query($conn, "SELECT email FROM `tbl_courier` where email = '$email' ");
 if(mysqli_num_rows($check_email) > 0){
-  echo"<script>alert('Email Already exists');window.location='reg.html'</script>";
+  echo"<script>alert('Email Already exists');
+  window.location='agencyreg.php'</script>";
 }
 else{
- $a = "INSERT INTO tbl_seller (`name`,`email`,`mobile`,`password`) VALUES ('$seller_name','$email','$seller_phn','$pswd')";
- $sql=mysqli_query($con,$a);
-$id = mysqli_insert_id($con);
- $sql1 = "INSERT INTO tbl_login (`email`,`password`,`type`) VALUES ('$email','$pswd','$type')";
+ $a = "INSERT INTO tbl_courier (`agencyname`,`district`,`phone`,`email`,`password`) VALUES ('$agencyname','$district','$phone','$email','$pswd')";
+ $sql=mysqli_query($conn,$a);
+$id = mysqli_insert_id($conn);
+ $sql1 = "INSERT INTO `tbl_login` (`email`,`password`,`type`) VALUES ('$email','$pswd','$type')";
 
- $qry = mysqli_query($con,$sql1);
+ $qry = mysqli_query($conn,$sql1);
 
  if($qry==TRUE)
 {
-	echo "<script>alert('User registered Successfully!!');window.location='../login/mainlogin.php'</script>";
+	echo "<script>alert('User registered Successfully!!');window.location='../login/login.php'</script>";
 }
 else
 {
-	echo "Error".$sql."<br>".$con->error;
+	echo "Error".$sql."<br>".$conn->error;
 }
-$con->close();
+$conn->close();
 }
 }
 }
@@ -81,7 +83,7 @@ $con->close();
     <!-- Main css -->
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body style="background-image:url(banner2.png)">
 
     <div class="main">
 
@@ -89,21 +91,24 @@ $con->close();
             <!-- <img src="images/sell-bg.jpg" alt=""> -->
             <div class="container">
                 <div class="signup-content">
-                    <form method="POST" id="signup-form" class="signup-form" action="seller.php">
+                    <form method="POST" id="signup-form" class="signup-form" action="">
                         <h2 class="form-title">Create account</h2>
                         <div class="form-group">
-                            <input type="text" class="form-input" name="name" id="name" placeholder="Your Name" required onkeyup="validateName()" autocomplete="off"/>
+                            <input type="text" class="form-input" name="name" id="name" placeholder="AgencyName" required onkeyup="validateName()" autocomplete="off"/>
                             <span id="name-error"></span>
                         </div>
-                        
+                        <div class="form-group">
+                            <input type="text" class="form-input" name="district" id="district" placeholder="district" required onkeyup="validatedistrict()" autocomplete="off"/>
+                            <span id="district-error"></span>
+                        </div>
                        
                         <div class="form-group">
-                            <input type="phone" class="form-input" name="mobile" id="mobile" placeholder="mobile" onkeyup="return ValidatePhone();" autocomplete="off"/>
+                            <input type="phone" class="form-input" name="phone" id="phone" placeholder="phone number" onkeyup="return ValidatePhone();" autocomplete="off"/>
                         <span id="phone-error"></span>
                     </div>
                         
                         <div class="form-group">
-                            <input type="email" class="form-input" name="email" id="email" placeholder="Your Email" required onkeyup="validateEmail()" autocomplete="off"/>
+                            <input type="email" class="form-input" name="email" id="email" placeholder="Email" required onkeyup="validateEmail()" autocomplete="off"/>
                             <span id="email-error"></span>
                         </div>
                         
@@ -233,7 +238,7 @@ $con->close();
                     </div>
                     </form>
                     <p class="loginhere">
-                        Have already an account ? <a href="../login/mainlogin.php" class="loginhere-link">Login here</a>
+                        Have already an account ? <a href="../login/login.php" class="loginhere-link">Login here</a>
                     </p>
                 </div>
             </div>
@@ -247,20 +252,28 @@ $con->close();
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 <script>
 var nameError = document.getElementById('name-error');
-var addressError = document.getElementById('address-error');
+var districtError = document.getElementById('district-error');
 var phoneError = document.getElementById('phone-error');
-var pincodeError = document.getElementById('pincode-error');
 var emailError = document.getElementById('email-error');
 var passwordError = document.getElementById('password-error');
-var confirmpwdError = document.getElementById('confirmpwd-error');
 
 function validateName(){
-    var name = document.getElementById('seller_name').value;
+    var name = document.getElementById('agencyname').value;
     if(!name.match(/^[a-zA-Z]*$/)){
         nameError.innerHTML = 'Write correct name';
         return false;
     }
     nameError.innerHTML=" ";
+    return true;
+}
+
+function validatedistrict(){
+    var name = document.getElementById('district').value;
+    if(!name.match(/^[a-zA-Z]*$/)){
+        districtError.innerHTML = 'Write correct district';
+        return false;
+    }
+    districtError.innerHTML=" ";
     return true;
 }
 // function validateAddress(){
@@ -288,11 +301,11 @@ function validateName(){
 
         function ValidatePhone() 
                         {
-                        var val = document.getElementById('mobile').value;
+                        var val = document.getElementById('phone').value;
                           if (!val.match(/^[6789][0-9]{9}$/))
                            {
                             document.getElementById('phone-error').innerHTML="Only Numbers started with 6,7,8,9 are allowed and must contain 10 number";
-                                  document.getElementById('mobile').value = val;
+                                  document.getElementById('phone').value = val;
                                     return false;
                            }else{
                             document.getElementById('phone-error').innerHTML="";
@@ -301,15 +314,15 @@ function validateName(){
                     }
                           
 
-    function validatePincode(){
-    var pincode = document.getElementById('pincode').value;
-    if(!pincode.match( /^(\d{4}|\d{6})$/)){
-       pincodeError.innerHTML = 'Enter valid pincode';
-        return false;
-    }
-    pincodeError.innerHTML=" ";
-    return true;
-}
+//     function validatePincode(){
+//     var pincode = document.getElementById('pincode').value;
+//     if(!pincode.match( /^(\d{4}|\d{6})$/)){
+//        pincodeError.innerHTML = 'Enter valid pincode';
+//         return false;
+//     }
+//     pincodeError.innerHTML=" ";
+//     return true;
+// }
 
 function validateEmail(){
     var email = document.getElementById('email').value;
@@ -393,7 +406,7 @@ function validatePassword()
 //                           }
     function Valuemore()
      {
-       if( validateName()==false ||  validateAddress()==false ||   ValidatePhone()==false || validatePincode()==false || ValidateEmail()==false ||  validatePassword()==false ||  validateConfirmpwd()==false)
+       if( validateName()==false ||  validatedistrict()==false ||   ValidatePhone()==false || ValidateEmail()==false ||  validatePassword()==false)
         {
           return false;
         }
