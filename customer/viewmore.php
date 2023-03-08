@@ -7,7 +7,7 @@ if(!isset($email)){
     header('location:../login/login.php');
 }
 
-?>
+ ?>
 
 <!DOCTYPE html>
 <html lang="en">
