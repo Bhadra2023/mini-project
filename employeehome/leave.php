@@ -195,6 +195,9 @@ while($row=mysqli_fetch_array($sql))
 </div>
 </div>
 </div>
+
+
+    
 <!-- partial -->
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.dcjqaccordion.2.7.js"></script>

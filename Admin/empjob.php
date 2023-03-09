@@ -142,11 +142,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <section id="main-content">
 	<section class="wrapper">
 		<div class="table-agile-info">
-        <form action="empjob.php" method="post">
-        <input type="submit" name="btnsubmit" value="Assign Job" class="btn btn-primary" style="margin-left:2%; background-color:blue; " />
+        <!-- <form action="empjob.php" method="post">
+        <input type="submit" name="btnsubmit" value="Assign Job" class="btn btn-primary" style="margin-left:2%; background-color:blue; " /> -->
  <div class="panel panel-default">
     <div class="panel-heading">
-     Employee View
+   Assign job
     </div>
     <div>
       <table class="table" ui-jq="footable" ui-options='{
@@ -170,7 +170,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <th>Email</th>
             <!-- <th style="color:#F00">Viewmore</th> -->
             
-    <th style="color:#F00">Status</th>
+    <!-- <th style="color:#F00">Status</th> -->
             
           </tr>
         </thead>
@@ -198,13 +198,13 @@ $sql=mysqli_query($conn,"SELECT * FROM tbl_employee");
     <td><?php echo htmlentities($display['phone']);?></td>
     <td><?php echo htmlentities($display['email']);?></td>
 	<td>
-    <?php
+    <!-- <?php
                     if($display['status']==1){
                         echo '<p><a href="empinactivate.php?id='.$display['emp_id'].'$status=1">Blocked</a></p>';
                     }else{
                         echo '<p><a href="empactivate.php?id='.$display['emp_id'].'$status=0">Unblocked</a></p>';
                     }
-                    ?>
+                    ?> -->
                </td>
              </tr>
                 </tbody>
