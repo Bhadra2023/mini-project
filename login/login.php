@@ -6,14 +6,8 @@ if(isset($_POST['submit'])){
 
 $email = mysqli_real_escape_string($conn,$_POST["email"]);
 $password = mysqli_real_escape_string($conn,$_POST["password"]);
-
-
-
-
 $sql ="SELECT * FROM `tbl_login` WHERE `email`='$email' and `password`='$password'";
 $sq ="SELECT * FROM `tbl_employee` WHERE `email`='$email' and `password`='$password'";
-
-
 $sq ="SELECT * FROM `tbl_customer` WHERE `email`='$email' and `password`='$password'";
 $sql3="SELECT * FROM `tbl_courier` WHERE `email`='$email' and `password`='$password'";
 $row =$conn->query($sql);
@@ -122,7 +116,7 @@ if($val==4){
 						<form method="post" action="" class="login-form">
 		      		<div class="form-group">
 		      			<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-user"></span></div>
-		      			<input type="text" class="form-control" name="email" placeholder="email" autocomplete="nope" required>
+		      			<input type="text" class="form-control" name="email" placeholder="email" autocomplete="off" required>
 		      		</div>
 	            <div class="form-group">
 	            	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-lock"></span></div>
