@@ -6,6 +6,27 @@ if(!isset($email)){
     session_destroy();
     header('location:../login/login.php');
 }
+
+$conn=mysqli_connect("localhost","root","","jewel");
+$sql=mysqli_query($conn,"select * from tbl_employee"); 
+$ru=mysqli_fetch_array($sql);
+$id=$ru['emp_id'];
+//   if($_POST['emp_id']){
+//     echo $id=$ru['emp_id'];exit;
+//   } 
+if(isset($_POST['buttonsubmit']))
+{
+    $empid=$_POST['name'];
+    $job=$_POST['job'];
+    $sal=$_POST['payment'];
+    $sql1="INSERT INTO `tbl_employeejob`(`emp_id`, `job`, `salary`) VALUES ('$empid','$job','$sal') ";
+    $res=mysqli_query($conn,$sql1);
+//    if($res)
+//     {
+//        echo "item inserted successfully";
+//  }
+
+ }
 ?>
 <!DOCTYPE html>
 <head>
@@ -139,89 +160,73 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
       
 <!--sidebar end-->
 <!--main content start-->
-<section id="main-content">
+<!-- <section id="main-content">
 	<section class="wrapper">
 		<div class="table-agile-info">
         <!-- <form action="empjob.php" method="post">
         <input type="submit" name="btnsubmit" value="Assign Job" class="btn btn-primary" style="margin-left:2%; background-color:blue; " /> -->
- <div class="panel panel-default">
-    <div class="panel-heading">
-   Assign job
-    </div>
-    <div>
-      <table class="table" ui-jq="footable" ui-options='{
-        "paging": {
-          "enabled": true
-        },
-        "filtering": {
-          "enabled": true
-        },
-        "sorting": {
-          "enabled": true
-        }}'>
-        <thead>
-          <tr>
-            <th data-breakpoints="xs">SLNO</th>
-            <th>Name</th>
-            <th>Gender</th>
-            <th>Address</th>
-            <th>Phone</th>
-          
-            <th>Email</th>
-            <!-- <th style="color:#F00">Viewmore</th> -->
-            
-    <!-- <th style="color:#F00">Status</th> -->
-            
-          </tr>
-        </thead>
-        <tbody>
-          <tr data-expanded="true">
-          <?php
-include("config.php");
-?>
-<?php
-$s=1;
+        <section id="main-content">
+	<section class="wrapper">
+		<div class="table-agile-info">
+        <form action="" method="post">
+        <input type="submit" name="btnsubmit" value="Back" class="btn btn-primary" style="margin-left:2%; background-color:#70c8fd; " />
+
+         
 
 
-$sql=mysqli_query($conn,"SELECT * FROM tbl_employee");
 
 
-   while($display=mysqli_fetch_array($sql))
-   {
-    ?>
-	<tr>
-    <?php echo "<td>".$s++."</td>";?>
-	
-    <td><?php echo htmlentities($display['name']);?></td>
-    <td><?php echo htmlentities($display['gender']);?></td>
-    <td><?php echo htmlentities($display['address']);?></td>
-    <td><?php echo htmlentities($display['phone']);?></td>
-    <td><?php echo htmlentities($display['email']);?></td>
-	<td>
-    <!-- <?php
-                    if($display['status']==1){
-                        echo '<p><a href="empinactivate.php?id='.$display['emp_id'].'$status=1">Blocked</a></p>';
-                    }else{
-                        echo '<p><a href="empactivate.php?id='.$display['emp_id'].'$status=0">Unblocked</a></p>';
-                    }
-                    ?> -->
-               </td>
-             </tr>
-                </tbody>
-              <?php $s=$s+1; } ?>
+
+                    
+	<div class="form-w3layouts">
+        <!-- page start-->
+        <!-- page start-->
+        <div class="row">
+            <div class="col-lg-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+                          Assign Job
+                        </header>
+                       
+                        <div class="panel-body">
+                            <div class="position-center">
+                                <form role="form" action="" method="post">
+                                    <div class="form-group">
+                                        <label for="name">Job</label>
+                                        <input type="text" class="form-control" name="job" id="job"  required  onkeyup="Validstr();">
+                                        </div>  <span id="msg1" style="color:red;"></span>
+                                        <label for="name">Payment</label>
+                                        <input type="number" class="form-control" name="payment" id="payment"  required min="500" max="5000">
+                    <script>
+                        function Validstr() 
+                        {
+                        var val = document.getElementById('name').value;
+                        if (!val.match(/^[a-zA-Z ]*$/)) 
+                        {
+                          document.getElementById('msg1').innerHTML=" Only alphabets are allowed";
+                                document.getElementById('name').value = "";
+                                  return false;
+                        }
+                          document.getElementById('msg1').innerHTML=" ";
+                         return true;
+                        }
+                   </script>
               
-</table>
+              <div class="form-group">
+                           
 
-        
-    </div>
-  </div>
-</form>
-</div>
-</section>
- <!-- footer -->
-		  
-  <!-- / footer -->
-</section>
+<input type="hidden" name="name" id="name <?php echo $ru['emp_id'];?>">
+<button type="submit" name="buttonsubmit" class="btn btn-info">Submit</button>
+                            </form>
+                               
+                                
+                                    
+                              
+
+                        </div>
+                    </section>
+
+         
 
 <!--main content end-->
 </section>

@@ -142,8 +142,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <section id="main-content">
 	<section class="wrapper">
 		<div class="table-agile-info">
-        <form action="empjob.php" method="post">
-        <input type="submit" name="btnsubmit" value="Assign Job" class="btn btn-primary" style="margin-left:2%; background-color:blue; " />
+        <!-- <input type="submit" name="btnsubmit" value="Assign Job" class="btn btn-primary" style="margin-left:2%; background-color:blue; " /> -->
  <div class="panel panel-default">
     <div class="panel-heading">
      Employee View
@@ -171,6 +170,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <!-- <th style="color:#F00">Viewmore</th> -->
             
     <th style="color:#F00">Status</th>
+    <!-- <th style="color:#F00">Job</th> -->
             
           </tr>
         </thead>
@@ -206,6 +206,11 @@ $sql=mysqli_query($conn,"SELECT * FROM tbl_employee");
                     }
                     ?>
                </td>
+               <td>
+<?php
+              	echo "<a style='color:blue;' href='empjob.php?emp_id=".$display['emp_id']."'>ASSIGN JOB</a> </td>";
+?>
+</td>
              </tr>
                 </tbody>
               <?php $s=$s+1; } ?>
