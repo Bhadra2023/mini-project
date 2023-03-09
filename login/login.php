@@ -63,7 +63,7 @@ if($val==4){
 	if($s==1){
 		$_SESSION['email']= $email;
 		$_SESSION['login_id']= $res["login_id"];
-		header('location:../agency/agencyreg.php');
+		header('location:../agency/agencyhome.php');
 	}elseif($s==0){
 		echo "<script>alert('Yet to be verified By Admin!');</script>";
 	}else{
@@ -145,7 +145,7 @@ if($val==4){
                                     <ul class="dropdown-menu">
                                        <li class="nav-item"><a class="nav-link" href="../cust_reg/add_cust.php">Customer</a></li>
                                        <li class="nav-item"><a class="nav-link" href="../employee/emp_reg.php">Employee</a></li>
-									   <li class="nav-item"><a class="nav-link" href="../courier/emp_reg.php">Courier</a></li>
+									   <li class="nav-item"><a class="nav-link" href="../agency/agencyreg.php">Courier</a></li>
 
                                     </ul>
 	          </div>
