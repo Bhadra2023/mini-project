@@ -8,23 +8,27 @@ if(!isset($email)){
 }
 
 $conn=mysqli_connect("localhost","root","","jewel");
-$sql=mysqli_query($conn,"select * from tbl_employee"); 
-$ru=mysqli_fetch_array($sql);
-$id=$ru['emp_id'];
-//   if($_POST['emp_id']){
-//     echo $id=$ru['emp_id'];exit;
-//   } 
+// $sql=mysqli_query($conn,"select * from tbl_employee"); 
+// $ru=mysqli_fetch_array($sql);
+// $id=$ru['emp_id'];
+// echo $id;
+// exit;
+  if($_GET['emp_id']){
+     $id=$_GET['emp_id'];
+  } 
 if(isset($_POST['buttonsubmit']))
 {
     $empid=$_POST['name'];
     $job=$_POST['job'];
     $sal=$_POST['payment'];
-    $sql1="INSERT INTO `tbl_employeejob`(`emp_id`, `job`, `salary`) VALUES ('$empid','$job','$sal') ";
+    $sql1="INSERT INTO `tbl_employeejob`(`emp_id`, `job`, `salary`) VALUES ('$id','$job','$sal') ";
     $res=mysqli_query($conn,$sql1);
-//    if($res)
-//     {
-//        echo "item inserted successfully";
-//  }
+   if($res)
+    {
+//  echo "Job assigned successfully";
+ echo "<script>alert('Job assigned Successfully!!');window.location='empjob.php'</script>";
+
+ }
 
  }
 ?>
