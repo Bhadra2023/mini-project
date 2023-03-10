@@ -142,7 +142,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <section id="main-content">
 	<section class="wrapper">
 		<div class="table-agile-info">
-        <!-- <input type="submit" name="btnsubmit" value="Assign Job" class="btn btn-primary" style="margin-left:2%; background-color:blue; " /> -->
+            <form method="post" action="jobview.php">
+        <input type="submit" name="btnsubmit" value="view Assigned Jobs" class="btn btn-primary" style="margin-left:2%; background-color:blue; " />
  <div class="panel panel-default">
     <div class="panel-heading">
      Employee View

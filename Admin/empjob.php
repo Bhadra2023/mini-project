@@ -13,9 +13,9 @@ $conn=mysqli_connect("localhost","root","","jewel");
 // $id=$ru['emp_id'];
 // echo $id;
 // exit;
-  if($_GET['emp_id']){
+ if($_GET['emp_id']){
      $id=$_GET['emp_id'];
-  } 
+ } 
 if(isset($_POST['buttonsubmit']))
 {
     $empid=$_POST['name'];
@@ -26,7 +26,8 @@ if(isset($_POST['buttonsubmit']))
    if($res)
     {
 //  echo "Job assigned successfully";
- echo "<script>alert('Job assigned Successfully!!');window.location='empjob.php'</script>";
+ echo "<script>alert('Job assigned Successfully!!');
+ window.location='empjob.php'</script>";
 
  }
 
@@ -172,7 +173,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <section id="main-content">
 	<section class="wrapper">
 		<div class="table-agile-info">
-        <form action="" method="post">
+        <!-- <form action="employeeview.php" method="post"> -->
         <input type="submit" name="btnsubmit" value="Back" class="btn btn-primary" style="margin-left:2%; background-color:#70c8fd; " />
 
          
