@@ -15,13 +15,14 @@ $conn=mysqli_connect("localhost","root","","jewel");
 // exit;
  if($_GET['emp_id']){
      $id=$_GET['emp_id'];
+  
  } 
 if(isset($_POST['buttonsubmit']))
 {
-    $empid=$_POST['name'];
+    $empid=$_POST['emp_id'];
     $job=$_POST['job'];
     $sal=$_POST['payment'];
-    $sql1="INSERT INTO `tbl_employeejob`(`emp_id`, `job`, `salary`) VALUES ('$id','$job','$sal') ";
+    $sql1="INSERT INTO `tbl_employeejob`(`emp_id`,`job`, `salary`) VALUES ('$id','$job','$sal') ";
     $res=mysqli_query($conn,$sql1);
    if($res)
     {
@@ -205,11 +206,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <script>
                         function Validstr() 
                         {
-                        var val = document.getElementById('name').value;
+                        var val = document.getElementById('job').value;
                         if (!val.match(/^[a-zA-Z ]*$/)) 
                         {
                           document.getElementById('msg1').innerHTML=" Only alphabets are allowed";
-                                document.getElementById('name').value = "";
+                                document.getElementById('job').value = "";
                                   return false;
                         }
                           document.getElementById('msg1').innerHTML=" ";
@@ -220,7 +221,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
               <div class="form-group">
                            
 
-<input type="hidden" name="name" id="name <?php echo $ru['emp_id'];?>">
+<input type="hidden" name="emp_id" id="name <?php echo $ru['emp_id'];?>">
+
 <button type="submit" name="buttonsubmit" class="btn btn-info">Submit</button>
                             </form>
                                

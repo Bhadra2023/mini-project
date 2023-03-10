@@ -146,7 +146,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
           
  <div class="panel panel-default">
     <div class="panel-heading">
-     Employee View
+   Assigned Jobs View
     </div>
     <div>
       <table class="table" ui-jq="footable" ui-options='{
@@ -162,15 +162,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <thead>
           <tr>
             <th data-breakpoints="xs">SLNO</th>
-            <th>Name</th>
-            <th>Gender</th>
-            <th>Address</th>
-            <th>Phone</th>
+            <th>Employee Id</th>
+            <th>Job</th>
+            <th>Monthly salary</th>
+            
           
-            <th>Email</th>
+         
             <!-- <th style="color:#F00">Viewmore</th> -->
             
-    <th style="color:#F00">Status</th>
+    <!-- <th style="color:#F00">Status</th> -->
     <!-- <th style="color:#F00">Job</th> -->
             
           </tr>
@@ -184,7 +184,7 @@ include("config.php");
 $s=1;
 
 
-$sql=mysqli_query($conn,"SELECT * FROM tbl_employee");
+$sql=mysqli_query($conn,"SELECT * FROM tbl_employeejob");
 
 
    while($display=mysqli_fetch_array($sql))
@@ -193,25 +193,25 @@ $sql=mysqli_query($conn,"SELECT * FROM tbl_employee");
 	<tr>
     <?php echo "<td>".$s++."</td>";?>
 	
-    <td><?php echo htmlentities($display['name']);?></td>
-    <td><?php echo htmlentities($display['gender']);?></td>
-    <td><?php echo htmlentities($display['address']);?></td>
-    <td><?php echo htmlentities($display['phone']);?></td>
-    <td><?php echo htmlentities($display['email']);?></td>
-	<td>
-    <?php
+    <td><?php echo htmlentities($display['emp_id']);?></td>
+    <td><?php echo htmlentities($display['job']);?></td>
+    <td><?php echo htmlentities($display['salary']);?></td>
+    <!-- <td><?php echo htmlentities($display['phone']);?></td>
+    <td><?php echo htmlentities($display['email']);?></td> -->
+	<!-- <td>
+   <?php
                     if($display['status']==1){
                         echo '<p><a href="empinactivate.php?id='.$display['emp_id'].'$status=1">Blocked</a></p>';
                     }else{
                         echo '<p><a href="empactivate.php?id='.$display['emp_id'].'$status=0">Unblocked</a></p>';
                     }
-                    ?>
-               </td>
+                    ?> -->
+               <!-- </td>
                <td>
 <?php
               	echo "<a style='color:blue;' href='empjob.php?emp_id=".$display['emp_id']."'>ASSIGN JOB</a> </td>";
 ?>
-</td>
+</td> --> 
              </tr>
                 </tbody>
               <?php $s=$s+1; } ?>
