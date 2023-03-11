@@ -60,8 +60,10 @@ if($val==4){
 		header('location:../agency/courierhome/index.html');
 	}elseif($s==0){
 		echo "<script>alert('Yet to be verified By Admin!');</script>";
+	}elseif($s==5){
+		echo "<script>alert('Reject By Admin!');</script>";
 	}else{
-		echo "<script>alert('Blocked By Admin!');</script>";
+		echo "<script>alert('Reject By Admin!');</script>";
 	}
 	
 }

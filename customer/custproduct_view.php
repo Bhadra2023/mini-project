@@ -6,6 +6,10 @@ $sql1="select * from `tbl_customer` where email='$email'";
 $res=$conn->query($sql1);
 $row1=$res->fetch_assoc();
 $id=$row1['cust_id'];
+if(!isset($email)){
+   session_destroy();
+   header('location:../login/login.php');
+}
 
 // $sql5="select * from `tbl_cart` where reg_id='$id'";
 // $res5=$con->query($sql5);
@@ -21,12 +25,14 @@ $sql2="select * from tbl_product where prod_name='".$productname."'";
 $ress=mysqli_query($conn,$sql2);
   $row=mysqli_fetch_array($ress);
   $pprice=$row['price'];
+//   echo $pprice=$row['prod_price'];exit;
   $pid=$row['pid'];
   $pimg=$row['photo'];
+  $pq=$row['quantity'];
   //move_uploaded_file($_FILES["photo"]["tmp_name"],"photo/".$_FILES["photo"]["name"]);
   //exit;
 
-$qty=0;
+$qty=1;
 $sql=mysqli_query($conn,"SELECT * FROM tbl_cart where prod_name='".$productname."' and cust_id='$id'");
   
  $p=mysqli_num_rows($sql);
@@ -41,7 +47,7 @@ $sql=mysqli_query($conn,"SELECT * FROM tbl_cart where prod_name='".$productname.
 //    echo "already item is in your cart!";
  else{
 
-$sql3="INSERT INTO `tbl_cart`(`pid`, `cust_id`, `prod_name`, `quantity`, `price`, `image`) VALUES ('$pid','$id','$productname','$qty','$pprice','$pimg')";
+$sql3="INSERT INTO `tbl_cart`(`pid`, `cust_id`, `prod_name`, `quantity`, `price`, `image`, `originalprice`, `org_stock`,`status`) VALUES ('$pid','$id','$productname','$qty','$pprice','$pimg','$pprice','$pq','1')";
 $res2=mysqli_query($conn,$sql3);
 if($res2){
 
@@ -51,6 +57,7 @@ if($res2){
 }
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

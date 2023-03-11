@@ -8,15 +8,8 @@ $sql1="select * from `tbl_customer` where email='$email'";
 $res=$conn->query($sql1);
 $row1=$res->fetch_assoc();
 $rid=$row1['cust_id'];
-	
-        
 
-// // logout
-// if(isset($_POST['btn_logout'])){
-//     session_destroy();
-//     header('Location: loginnew.php');
-// }
-// $n=$_SESSION['uname'];
+$price=0;
 $sql="SELECT * FROM `tbl_customer` WHERE email='$email'";
 $gotresult=mysqli_query($conn,$sql);
 if($gotresult)
@@ -33,6 +26,7 @@ if($gotresult)
       
     }
 }
+
 
 
 
@@ -82,14 +76,15 @@ if($gotresult)
   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
   rel="stylesheet"
 />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+      <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 <!-- Google Fonts -->
 <link
   href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
   rel="stylesheet"
 />
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-      <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
 <!-- MDB -->
 <link
   href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.css"
@@ -133,7 +128,7 @@ if($gotresult)
             <div class="container">
                <div class="row">
                   <div class="col-sm-12">
-                     <div class="logo"><a href="index.php"><b><h1 style="font-family:algerian;color:#ffffff;fontsize: 5spx;">JeWel</h1></b></a></div>
+                  <div class="logo"><a href="index.php"><b><h1 style="font-family:algerian;color:#ffffff;fontsize: 5spx;">JeWel</h1></b></a></div>
                   </div>
                </div>
             </div>
@@ -147,13 +142,15 @@ if($gotresult)
                      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                      <a href="index.php">Home</a>
                      
+                     <a href="profile.php">Profile</a>
                      <a href="address.php">  Address</a>
                      <a href="addressview.php">View address</a>
                      <a href="cart.php">My Cart</a>
-                     <a href="order.php">My Orders</a>
-                     <a href="../login/updatePass.php">change password</a>
+                     <a href="Order.php">My Orders</a>
+                     <a href="../login/updatepass.php">change password</a>
 
                   </div>
+   
                   <span class="toggle_icon" onclick="openNav()"><img src="images/toggle-icon.png"></span>
                   <div class="dropdown">
                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All Category 
@@ -174,11 +171,9 @@ if($gotresult)
                            <button class="btn btn-secondary" type="button" style="background-color: #f26522; border-color:#f26522 ">
                            <i class="fa fa-search"></i>
                            </button>
-
                         </div>
                      </div>
                   </div>
-</form>
                   <div class="header_box">
                      <div class="lang_box ">
                         <a href="#" title="Language" class="nav-link" data-toggle="dropdown" aria-expanded="true">
@@ -205,44 +200,11 @@ if($gotresult)
                      </div>
                   </div>
                </div>
-            </div>
-         </div>
+               </div>
+               </div>
+               
             
-<!-- <nav class="navbar navbar-expand-lg navbar-light" style="background-color:red" id="navb">
-  <a class="navbar-brand" href="#">Eat and Eat</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav" style="margin-left:auto;">
-      <li class="nav-item active">
-        <a class="nav-link" href="home.php">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
-      </li>
-    </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      
-    </form>
-  </div>
-</nav> -->
 <div class="container-fluid">
 <div class="row">
 <div class="col-md-10 col-11 mx-auto">
@@ -251,75 +213,86 @@ if($gotresult)
 
 <div class="col-md-12 col-lg-8 col-11 mx-auto main_cart mb-lg-0 mb-5 shadow">
 <?php 
-$s="select * from tbl_cart where cust_id='$rid'";
+$s="select * from tbl_cart where cust_id='$rid' && `status` = '1'";
 $t=0;
 $run=mysqli_query($conn,$s);
+
+// $run2=mysqli_fetch_array($run);
+// if($run2<=0){
+//    echo '<script>document.getElementById("totalpricebody").innerHTML="Empty Cart"</script>';
+// }
+
 while($ru=mysqli_fetch_assoc($run)){
   $id=$ru['cart_id'];
   //$pid=$ru['pid'];
   $image=$ru['image'];
   $pname=$ru['prod_name'];
   $price=$ru['price'];
-  
- 
+  $originalprice=$ru['originalprice'];
+  $qty=$ru['quantity'];
+  $stk=$ru['org_stock'];
+
 
 ?>
+    
  
- 
-            <div class="card p-4">
+<form action="" method="post">
+
+ <div class="card p-4">
 
 
-            <h2 class="py-4 font-weight-bold"></h2>
-            <div class="row">
-                <!-- cart images div -->
+ <h2 class="py-4 font-weight-bold"></h2>
+ <div class="row">
+     <!-- cart images div -->
 
-                <div class="col-md-5 col-11 mx-auto bg-light d-flex justify-content-center align-items-center shadow product_img">
-                <img src="../Admin/photo/<?php echo "$image";?>" class="img-fluid" alt="cart img">
-                </div>
+     <div class="col-md-5 col-11 mx-auto bg-light d-flex justify-content-center align-items-center shadow product_img">
+     <img src="../Admin/photo/<?php echo "$image";?>" class="img-fluid" alt="cart img">
+     </div>
 
-            
 
-                <!-- cart product details -->
-                <div class="col-md-7 col-11 mx-auto px-4 mt-2">
-                <div class="row">
-
-                
-                <!-- product name  -->
-                <div class="col-6 card-title">
-                <h1 class="mb-4 product_name"><?php echo $pname ?></h1>
-               
-                </div>
-                <!-- quantity inc dec -->
-               
-                <div class="col-2">
-               Quantity<input type="number" name="quantity" style="width:70px" id="qty-<?php echo $id; ?>" value="1" onchange="varr(<?php echo $id;?>)" min="0",max="5" >
-               <input type="hidden" id="price-<?php echo $id; ?>" value="<?php echo $price; ?>">
-               <?php $t=$t+ $price; ?>
-               <input type="hidden" id="total" name="total" value="0">
-               
-                </div>
-            </div>
  
 
-            <!-- //remover move and price -->
-            <div class="row">
-            <div class="col-8 d-flex justify-content-between remove_wish">
-            <p><a href="removecart.php?val=<?php echo $id;?>" class="fas fa-trash-alt" style="color:red"></a> REMOVE ITEM</p>
-            <!-- Default switch -->
+     <!-- cart product details -->
+     <div class="col-md-7 col-11 mx-auto px-4 mt-2">
+     <div class="row">
+     <!-- product name  -->
+     <div class="col-6 card-title">
+     <h1 class="mb-4 product_name"><?php  echo "$pname"?></h1>
+    
+     </div>
+     <!-- quantity inc dec -->
+     <div class="col-2">
+    Quantity<input type="number"  name="quantity" style="width:70px" id="qty-<?php echo $id; ?>" value="<?php echo $qty; ?>" onchange="func(<?php echo $id;?>)" min="1",max="300" >
+    <input type="hidden" id="price-<?php echo $id; ?>" value="<?php echo $originalprice; ?>" name="pname">
+    <input type="hidden" id="originalstock-<?php echo $id; ?>" value="<?php echo $stk; ?>" name="originalstock">
+    <input type="hidden" id="total-<?php echo $id; ?>" name="total" value="">
+    
+     </div>
+ </div>
 
-            
-            </div>
-            <div class="col-4 d-flex justify-content-end price_money">
-            <h3>$<span id="itemval-<?php echo $id; ?>"><?php echo "$price";?> </span></h3>
-           					
-            </div>
-            </div>
+
+ <!-- //remover move and price -->
+ <div class="row">
+ <div class="col-8 d-flex justify-content-between remove_wish">
+ <p><a href="removecart.php?val=<?php echo $id; ?>" class="fas fa-trash-alt" style="color:red"></a> REMOVE ITEM</p>
+ <!-- Default switch -->
+
+ 
+ </div>
+ <div class="col-4 d-flex justify-content-end price_money">
+ <h3>&#x20b9<span id="itemprice-<?php echo $id; ?>"><?php echo "$price";?> </span></h3>
+   <!-- <?php
+   //$tPrice = $tPrice+ $price;
+   ?> -->
+ </div>
+ </div>
 
     </div>
     </div>
     </div>
     <?php
 }
+
     ?>
 
     <hr/>
@@ -328,65 +301,29 @@ while($ru=mysqli_fetch_assoc($run)){
  </div>
 
 
-
-
-
- 
-
-
 <!-- right side div -->
-<div class="col-md-12 col-lg-4 col-11 mx-auto mt-lg-0 mt-md-5">
-
-
-                    
-
-
-<!-- //  echo "<td><a style='color:#090' href='orderaddress.php?address_id=".$display['address_id']."'>Edit</a> </td>"; -->
-
- 
-
-
-
-
-
-
+<div class="col-md-12 col-lg-4 col-11 mx-auto mt-lg-0 mt-md-5" id="totalpricebody">
 <div class="right_side p-3 shadow bg-white">
-<h6 class="product_name mb-5">Shipping Address</h6>
-   <?php
-include("config.php");
-?>
-<?php
-
-
-$sql=mysqli_query($conn,"SELECT p.*,s.district_title as sname,c.state_title as c_name  FROM address p inner join district s on s.districtid=p.districtid inner join state c on c.state_id=s.state_id ");
-
-while($display=mysqli_fetch_array($sql))
-{
-
-?>
-<h3 style="color:#8c212f"><?php echo $display['housename']?> ,<?php echo $display['sname']?> ,<?php echo $display['c_name']?>  </h3>
-<b>Pincode:</b><h3 style="color:#8c212f"><?php echo $display['pincode']?></h3>
-<b>Mobile Number:</b><h3 style="color:#8c212f"><?php echo $display['phone']?></h3>
-      <center>  <h1 style="background-color:tomato">   Delivery in 6 days</h1></center>
-
 <h2 class="product_name mb-5">The Total Amount Of</h2>
 <div class="price_indiv d-flex justify-content-between">
 <p>Product amount</p>
 
-<p><span id="finalp"><?php echo "$t"; ?></span></p>
-<input type="hidden" id="total1" value="<?php echo $t; ?>">
+<p><span id="total"><?php echo "$price";?></span></p>
+<input type="hidden" id="totalprice" name="total1" value="<?php echo "$price"; ?>">
 </div>
-<div class="price_indiv d-flex justify-content-between">
+
+<!-- <div class="price_indiv d-flex justify-content-between">
 <p>Shipping Charge</p>
 <p><span id="shipping_charge">50.0</span></p>
-</div>
+</div> -->
 <hr />
 <div class="total-amt d-flex justify-content-between font-weight-bold">
 <p>The total amount of (including VAT)</p>
-<p><span id="total_cart_amt"><?php $p=$t+50; echo "$p";?></span></p>
+<p><span id="itemprice1"><?php echo "$price";?></span></p>
+<!-- <input type="hidden" id="itemprice11" name="total11" value="<?php echo "$price"; ?>"> -->
 </div>
-       <input type="button" name="pay" id ="rzp-button1" value="checkout" onclick="pay_now()" class="btn btn-success">
-
+<input type="hidden" value="<?php echo $rid;?>" id="hidden_txt">
+<input type="button" name="pay" id ="rzp-button1" value="Checkout" onclick="pay_now()" class="btn btn-success">
 </div>
 <!-- discount code part -->
 
@@ -398,8 +335,6 @@ while($display=mysqli_fetch_array($sql))
 </div>
 
 
-
-
 <!-- discount code ends -->
 
 </div>
@@ -409,8 +344,9 @@ while($display=mysqli_fetch_array($sql))
 </div>
 </div>
 </div>
-<!-- Optional JavaScript -->
-<!-- Popper.js first, then Bootstrap JS -->
+
+
+
 <script src="js/jquery.min.js"></script>
       <script src="js/popper.min.js"></script>
       <script src="js/bootstrap.bundle.min.js"></script>
@@ -430,40 +366,91 @@ while($display=mysqli_fetch_array($sql))
       </script>
 
 
-
+<!-- Optional JavaScript -->
+<!-- Popper.js first, then Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
 
 <script>
- function varr(cart)
-    {
-      var x=document.getElementById('qty-'+cart).value;
-      
-      x=parseInt(x);
-      if(isNaN(x))
-      {
-        x=1
-      }
-      var price=document.getElementById('price-'+cart).value;
-      price=parseInt(price);
-     var total=x*price;
-     document.getElementById('itemval-'+cart).innerHTML=total;
-     
+function func(cart) {
 
-    var tot=document.getElementById('total1').value;
+var input = $("#qty-" + cart);
+var input2 = $("#price-" + cart);
+var qty = parseInt($(input).val());
+var price = parseInt($(input2).val());
+ var ostock = $("#originalstock-"+cart);
 
-    tot=parseInt(tot);
-    
-    tot=tot-price+total;
-    //tot=tot+total;
-    
-    document.getElementById('total').value=tot;
-var f=document.getElementById('total').value;
-document.getElementById('finalp').innerHTML=tot;
-var p=tot+50;
-document.getElementById('total_cart_amt').innerHTML=p;  
-    }
+  ostock = parseInt($(ostock).val());
+if(qty<1){
+  alert("no negative value ");
+  $("#qty-" + cart).html(1);
+  $("#qty-" + cart).val(1);
+  $("#itemprice-"+cart).html(price);
+  $("#itemprice1").html(price);
+  $("#totalprice").val(price);
+
+
+}
+else{
+
+
+if(qty<ostock)
+{
+  var total=qty*price;
+$("#total-"+cart).val(total);
+$("#itemprice-"+cart).html(total);
+$("#total").html(total);
+$("#totalprice").val(total);
+$("#total").html(total);
+$("#itemprice1").html(total);
+// $("#total").html(total);
+// $("#itemprice11").html(total);
+savecart(cart, qty, total);
+ add(cart);
+}
+else{
+   // $n ="hi";
+  alert("Maximum Quantity reached");
+  $("#qty-" + cart).val(ostock);
+  var total=ostock*price;
+$("#total-"+cart).val(total);
+$("#itemprice-"+cart).html(total);
+$("#total").html(total);
+$("#totalprice").val(total);
+$("#total").html(total);
+$("#itemprice1").html(total);
+savecart(cart, ostock, total);
+
+}
+}
+// alert(total);
+  };
+
+
+
+  function savecart(cart,qty,total){
+    // var input = $("#stock-"+cart);
+    $.ajax({
+
+url: "cartupdate.php",
+type: "POST",
+data: {
+  cart: cart,
+  quantity: qty,
+  price: total
+},
+success: function (response) {
+  // $(input).val(quantity);
+  console.log(response);
+  // alert(response);
+}
+});
+
+
+  }
+
  </script>
+
  <script>
   if ( window.history.replaceState ) {
   window.history.replaceState( null, null, window.location.href );
@@ -472,14 +459,14 @@ document.getElementById('total_cart_amt').innerHTML=p;
 <script>
 
 // var val= document.getElementById("totamt").value=total;
-function pay_now(){
+    function pay_now(){
 
-var usrId=jQuery('#hidden_txt').val();
+   var usrId=jQuery('#hidden_txt').val();
 
-console.log(usrId);
- var amt=<?php $p=$t+50; echo "$p";?>;
- var options = {
-    "key": "rzp_test_3VFsQeeHTjG3Kh",
+   console.log(usrId);
+    var amt=$("#totalprice").val();
+    var options = {
+   "key": "rzp_test_3VFsQeeHTjG3Kh",
     "amount": amt*100, 
     "currency": "INR",
     "name": "Jewellery Store",
@@ -517,6 +504,3 @@ document.getElementById('rzp-button1').onclick = function(e){
 </script>
 </body>
 </html>
-<?php
-}                                                   
-?>

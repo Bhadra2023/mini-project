@@ -73,7 +73,9 @@ if(!isset($email)){
                               <li class="nav-item active">
                                  <a class="nav-link" href="index.php">Home</a>
                               </li>
-                              
+                              <li class="nav-item active">
+                                 <a class="nav-link" href="employeejobview.php">Assigned Job</a>
+                              </li>
                               <li class="nav-item">
                                  <a class="nav-link" href="leave.php">Apply Leave</a>
                               </li>

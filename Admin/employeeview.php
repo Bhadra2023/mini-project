@@ -208,9 +208,14 @@ $sql=mysqli_query($conn,"SELECT * FROM tbl_employee");
                     ?>
                </td>
                <td>
+              
 <?php
+
               	echo "<a style='color:blue;' href='empjob.php?emp_id=".$display['emp_id']."'>ASSIGN JOB</a> </td>";
+      
+                
 ?>
+
 </td>
              </tr>
                 </tbody>

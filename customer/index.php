@@ -136,7 +136,7 @@ while($row=mysqli_fetch_array($gotresult))
                      <a href="addressview.php">View address</a>
                      <a href="addressview.php">View address</a>
                      <a href="cart.php">My Cart</a>
-                     <a href="Orderdetails.php">My Orders</a>
+                     <a href="Order.php">My Orders</a>
                      <a href="../login/updatePass.php">change password</a>
                   </div>
                   <span class="toggle_icon" onclick="openNav()"><img src="images/toggle-icon.png"></span>

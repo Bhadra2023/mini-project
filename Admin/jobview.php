@@ -27,6 +27,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link rel="stylesheet" href="css/font.css" type="text/css"/>
 <link href="css/font-awesome.css" rel="stylesheet"> 
 <!-- //font-awesome icons -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+
 <script src="js/jquery2.0.3.min.js"></script>
 </head>
 <body>
@@ -196,6 +199,8 @@ $sql=mysqli_query($conn,"SELECT * FROM tbl_employeejob");
     <td><?php echo htmlentities($display['emp_id']);?></td>
     <td><?php echo htmlentities($display['job']);?></td>
     <td><?php echo htmlentities($display['salary']);?></td>
+ <td>   <input type="button" name="pay" id ="rzp-button1" value="pay" onclick="pay_now()" class="btn btn-success"></td>
+
     <!-- <td><?php echo htmlentities($display['phone']);?></td>
     <td><?php echo htmlentities($display['email']);?></td> -->
 	<!-- <td>
@@ -231,7 +236,50 @@ $sql=mysqli_query($conn,"SELECT * FROM tbl_employeejob");
 
 <!--main content end-->
 </section>
-</body>
+<script>
+function pay_now(){
+
+var usrId=jQuery('#hidden_txt').val();
+
+console.log(usrId);
+ var amt=<?php echo "$salary";?>;
+ var options = {
+    "key": "rzp_test_3VFsQeeHTjG3Kh",
+    "amount": amt*100, 
+    "currency": "INR",
+    "name": "Jewellery Store",
+    "description": "Test Transaction",
+    "image": "https://drive.google.com/file/d/1FJCNPPMhML96z3s4IrR8-yGU4A6HLm2X/view?usp=share_link",
+    "handler":function(response){
+        console.log(response);
+        jQuery.ajax({
+            type:'POST',
+            url:'payment_process.php',
+            data:"payment_id="+response.razorpay_payment_id+"&amount="+amt+"&usrId="+usrId,
+            success:function(result){
+                window.location.href="thankyou.php?payment_id="+response.razorpay_payment_id;
+
+               //  window.location.href="payment_process.php?payment_id="+response.razorpay_payment_id;
+            }
+
+        })
+        // if(response){
+        //     window.location.href="/adsol/index.php";
+        // }
+       
+
+    }
+};
+
+var rzp1 = new Razorpay(options);
+document.getElementById('rzp-button1').onclick = function(e){
+    rzp1.open();
+    e.preventDefault();
+}
+
+}
+
+</script>
       
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.dcjqaccordion.2.7.js"></script>

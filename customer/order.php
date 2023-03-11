@@ -1,67 +1,34 @@
 <?php
-include("config.php");
+include "config.php";
 session_start();
 $email=$_SESSION['email'];
-$sql1="select * from `tbl_customer` where email='$email'";
-$res=$conn->query($sql1);
-$row1=$res->fetch_assoc();
-$id=$row1['cust_id'];
 
-// $sql5="select * from `tbl_cart` where reg_id='$id'";
-// $res5=$con->query($sql5);
-// $row5=$res5->fetch_assoc();
-// echo $status=$row5['status'];exit;
+if(!isset($email)){
+  session_destroy();
+  header('location:../login/login.php');
+}
+//$reg="SELECT *reg_id FROM `tbl_reg` WHERE `reg_email` = $email";
+$sql = mysqli_query($conn,"SELECT * FROM tbl_customer where email='$email'");
+$row = mysqli_fetch_array($sql);
+$reg = $row['cust_id'];
+$name = $row['name'];
+// echo $name; exit;
 
-
-if(isset($_POST["checkout"]))
-{
-$productname=$_POST['pname'];
-$totalamount=$_POST['p'];
-$Quantity=$_POST['qty'];
-// echo "$productname";exit;
-$sql2="select * from tbl_product where prod_name='".$productname."'";
-$ress=mysqli_query($conn,$sql2);
-$row=mysqli_fetch_array($ress);
-$pid=$row['pid'];
-//   $Quantity=$row[''];
-//   $pimg=$row['photo'];
-
-
-  //move_uploaded_file($_FILES["photo"]["tmp_name"],"photo/".$_FILES["photo"]["name"]);
-  //exit;
-
-
-// $sql3=mysqli_query($conn,"SELECT * FROM tbl_order where prod_name='".$productname."' and cust_id='$id'");
-  
-//  $p=mysqli_num_rows($sql3);
-//    if($p=mysqli_num_rows($sql3)>0)
-// {
-//    echo "<script>alert('product already exist')</script>"; 
-// // exit;
+$sql1 = mysqli_query($conn,"SELECT a.*,b.* FROM `tbl_order` as a INNER JOIN `tbl_product` as b ON a.cust_id='$reg' and a.pid=b.pid");
+// $a=$row1['orderstatus'];
+// if($a==1){
+//   $n="Out of Delivery";
+// }else{
+//   $n="Delivered";
 // }
-
-
-// if($status==0){
-//    echo "already item is in your cart!";
- 
-
-$sql3="INSERT INTO `tbl_order`(`cart_id`, `cust_id`, `totalamount`,`pid`, `quantity`,`orderstatus`) VALUES (0,'$id','$totalamount','$pid','$Quantity',0)";
-$res2=mysqli_query($conn,$sql3);
-if($res2){
-
-   //echo"item Ordered successfully";
-}
-}
-
+// $row1 = mysqli_fetch_array($sql1);
+// echo $row1['totalamount'];
+// exit;
 
 ?>
-
-
-<!DOCTYPE html>
 <html lang="en">
-   <head>
-      <!-- basic -->
-      <meta charset="utf-8">
+<head>
+<meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <!-- mobile metas -->
@@ -94,10 +61,51 @@ if($res2){
       <link rel="stylesheet" href="css/owl.carousel.min.css">
       <link rel="stylesoeet" href="css/owl.theme.default.min.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-   </head>
-   <body>
-      <!-- banner bg main start -->
-      <div class="banner_bg_main">
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Bootstrap CSS -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+      <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<!-- Google Fonts -->
+<link
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+  rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.css"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" />
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<script
+  type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.js"
+></script>
+<title>Cart</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300&display=swap'); * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Mulish', sans-serif; } :root { --text-clr: #4f4f4f; } p { color: #6c757d; } a { text-decoration: none; color: var(--text-clr); } a:hover { text-decoration: none; color: var(--text-clr); } h2 { color: var(--text-clr); font-size: 1.5rem; } .main_cart { background: #fff; } .card { border: none; } .product_img img { min-width: 200px; max-height: 200px; } .product_name { color: black; font-size: 1.4rem; text-transform: capitalize; font-weight: 500; } .card-title p { font-size: 0.9rem; font-weight: 500; } .remove-and-wish p { font-size: 0.8rem; margin-bottom: 0; } .price-money h3 { font-size: 1rem; font-weight: 600; } .set_quantity { position: relative; } .set_quantity::after { content: "(Note, 1 piece)"; width: auto; height: auto; text-align: center; position: absolute; bottom: -20px; right: 1.5rem; font-size: 0.8rem; } .page-link { line-height: 16px; width: 45px; font-size: 1rem; display: flex; justify-content: center; align-items: center; color: #495057; } .page-item input { line-height: 22px; padding: 3px; font-size: 15px; display: flex; justify-content: center; align-items: center; text-align: center; } .page-link:hover { text-decoration: none; color: #495057; outline: none !important; } .page-link:focus { box-shadow: none; } .price_indiv p { font-size: 1.1rem; } .fa-heart:hover { color: red; }
+</style>
+<!-- <style>
+    #navb{
+         color:white;
+    }
+</style> -->
+
+
+
+<body class="bg-light">
+<div class="banner_bg_main">
          <!-- header top section start -->
          <div class="container">
             <div class="header_section_top">
@@ -116,7 +124,7 @@ if($res2){
             <div class="container">
                <div class="row">
                   <div class="col-sm-12">
-                     <div class="logo"><a href="index.php"><h1 style="font-family:algerian;color:#ffffff;fontsize: 5spx;">JeWel</h1></a></div>
+                     <div class="logo"><a href="index.php"><b><h1 style="font-family:algerian;color:#ffffff;fontsize: 5spx;">Jewel</h1></b></a></div>
                   </div>
                </div>
             </div>
@@ -130,14 +138,15 @@ if($res2){
                      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                      <a href="index.php">Home</a>
                      
-                     <a href="jewellery.html">profile</a>
-                     <a href="address.php">Add address</a>
+                     <a href="profile.php">Profile</a>
+                     <a href="address.php">  Address</a>
                      <a href="addressview.php">View address</a>
-                     <a href="cart.php"> My Cart</a>
-                     <a href="Orderview.php">My Orders</a>
+                     <a href="cart.php">My Cart</a>
+                     <a href="vieworder.php">My Orders</a>
                      <a href="../login/updatePass.php">change password</a>
 
                   </div>
+   
                   <span class="toggle_icon" onclick="openNav()"><img src="images/toggle-icon.png"></span>
                   <div class="dropdown">
                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All Category 
@@ -185,250 +194,93 @@ if($res2){
                      </div>
                   </div>
                </div>
-            </div>
-         </div>
-         <div class="banner_section layout_padding">
-            <div class="container">
-               <div id="my_slider" class="carousel slide" data-ride="carousel">
-                  <div class="carousel-inner">
-                     <div class="carousel-item active">
-                        <div class="row">
-                           <div class="col-sm-12">
-                              <h1 class="banner_taital">Get Start <br>Your favourite shopping</h1>
-                              <div class="buynow_bt"><a href="#">Buy Now</a></div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="carousel-item">
-                        <div class="row">
-                           <div class="col-sm-12">
-                              <h1 class="banner_taital">Get Start <br>Your favourite shopping</h1>
-                              <div class="buynow_bt"><a href="#">Buy Now</a></div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="carousel-item">
-                        <div class="row">
-                           <div class="col-sm-12">
-                              <h1 class="banner_taital">Get Start <br>Your favourite shopping</h1>
-                              <div class="buynow_bt"><a href="#">Buy Now</a></div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <a class="carousel-control-prev" href="#my_slider" role="button" data-slide="prev">
-                  <i class="fa fa-angle-left"></i>
-                  </a>
-                  <a class="carousel-control-next" href="#my_slider" role="button" data-slide="next">
-                  <i class="fa fa-angle-right"></i>
-                  </a>
                </div>
-            </div>
-         </div>
-         <!-- banner section end -->
-      </div>
-      <!-- banner bg main end -->
-      
-      <!-- electronic section end -->
-      <!-- jewellery  section start -->
-      <div class="jewellery_section">
-         <div id="jewellery_main_slider" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-               <div class="carousel-item active">
-                  <div class="container">
-                     <h1 class="fashion_taital"> Address</h1>
-                     <div class="fashion_section_2">
-                        <div class="row">
-                        <form role="form" action="" method="post">
-
-                                    <!-- <div class="form-group">
-                   
-                
-
- <div class="panel-heading">
-
-  
- </div>
+               </div>
 
 
- <div>
-
-       
-          -->
-
-         
-      
-       <?php
-include("config.php");
-?>
-<?php
+               
 
 
-$sql=mysqli_query($conn,"SELECT p.*,s.district_title as sname,c.state_title as c_name  FROM address p inner join district s on s.districtid=p.districtid inner join state c on c.state_id=s.state_id ");
-
-while($display=mysqli_fetch_array($sql))
-{
-
-?>
-<b >State:</b><h4 style="color:#8c212f"><?php echo $display['c_name']?></h4><br>
-<b>District:</b><h4 style="color:#8c212f" ><?php echo $display['sname']?></h4>
-<b>Pincode:</b><h4 style="color:#8c212f"><?php echo $display['pincode']?> </h4>
-<b>Phone:</b><h4 style="color:#8c212f"><?php echo $display['phone']?></h4>
-<b>Housename:</b><h4 style="color:#8c212f"><?php echo $display['housename']?></h4>
-<b>Roadname:</b><h4 style="color:#8c212f"><?php echo $display['roadname']?></h4>
-
-
-
-
-<!-- //  echo "<td><a style='color:#090' href='orderaddress.php?address_id=".$display['address_id']."'>Edit</a> </td>"; -->
-
- 
-
-
-<?php } ?>
-
- 
-
-</div></div>
-
-    
-   <center> <div class="jewellery_section">
-         <div id="jewellery_main_slider" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-               <div class="carousel-item active">
-                 
-                            <div class="container">
-                     <h1 class="fashion_taital">Product</h1>
-                     <div class="fashion_section_2">
-                        <div class="row">
-                        <?php 
-                            
-                              $x=$_POST["Quantity"];
-                              $e=$_POST["p"];
-
-                            
-                             
-                              $c=$_POST["price"];
-                              $pname=$_POST["pname"];
-                              $image=$_POST["image"];
-                             
-                                 
-                                  ?> 
-                          <script>
- function varr(cart)
-    {
-      var x=document.getElementById('qty-'+cart).value;
-      
-      x=parseInt(x);
-      if(isNaN(x))
-      {
-        x=1
-      }
-      var price=document.getElementById('price-'+cart).value;
-      price=parseInt(price);
-     var total=x*price;
-     document.getElementById('itemval-'+cart).innerHTML=total;
-     
-
-    var tot=document.getElementById('total1').value;
-
-    tot=parseInt(tot);
-    
-    tot=tot-price+total;
-    //tot=tot+total;
-    
-    document.getElementById('total').value=tot;
-var f=document.getElementById('total').value;
-document.getElementById('finalp').innerHTML=tot;
-var p=tot+50;
-document.getElementById('total_cart_amt').innerHTML=p;  
-    }
- </script>
- <script>
-  if ( window.history.replaceState ) {
-  window.history.replaceState( null, null, window.location.href );
-}
-</script>
-      <?php
-      $sql="select * from `tbl_product`";
-      $res=mysqli_query($conn,$sql);
-      $row=mysqli_fetch_array($res);
-      ?>
-                             <div class="col-lg-4 col-sm-4">
-                           
-                           <div class="box_main"> 
-                          
-                           <input type="hidden" value="<?php echo $row['prod_name']?>" name="hiddenpname" id="hiddenpname"/>
-
-                            <h4 class="shirt_text"><?php echo "$pname"?> </h4>
-                              <p class="price_text"> Orginal Price  <span style="color: #262626;"><b> ₹  </b><?php echo "$c"?></span></p>
-                            
-                              <div class="jewellery_img"><img src="../Admin/photo/<?php echo "$image";?>" height="250px" width="250px"> </div>
-                              <!-- <div class="btn_main"> -->
-                              <input type="hidden" value="<?php echo $row['prod_name']?>" name="hiddenpname" id="hiddenpname"/>
-
-                              <p class="price_text">Total Amount<span style="color: #262626;"><b> ₹  </b><?php echo "$e"?></span></p>
-                              <p class="price_text">Quantity<span style="color: #262626;"> <?php echo "$x"?></span></p>
-                                 <!-- <div class="buy_bt"><a href="#">Buy Now</a></div>
-                                  <div class="btn_main"> -->
-                                  <!-- <input type="submit" name="submit" value="Add To cart" class="btn btn-danger" /> -->
-                             
-
-      </form>
-                              </div>
-                           </div>
-                          <!-- </div> -->
-                           
-                          
-                          
-                           
-                           <?php
-  
-
-        
-         
-         ?>
-         </div>
-      </div>
-      </div>
-</div>
-</div>
-</div>
-
-                 
-                          
+<section class="h-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-10 col-xl-12">
+        <div class="card" style="border-radius: 10px;">
+          <div class="card-header px-4 py-5">
+            <h3 class="text-muted mb-0">Thanks for your Order, <span style="color: #a8729a;"><?php echo $name; ?></span>!</h3>
+          </div>
+          <div class="card-body p-4">
             
+            <div class="card shadow-0 border mb-4">
+              <div class="card-body">
+                <div class="row">
+                <?php
+               if($sql1->num_rows>0){
+                while($row1 = mysqli_fetch_array($sql1)){
+
+                  $a=$row1['orderstatus'];
+        if($a==1){
+          $n =  "<div style=\"color: red;\">Out of Delivery</div>";
+        // $n="Out of Delivery";
+      
+      }else{
+        $n =  "<div style=\"color: green;\"> Delivered</div>";
+      }
+
+               ?>
+
+                  <div class="col-md-2">
+                    <img src="../Admin/photo/<?php echo $row1['photo'];?>" width='100' height='50'>
+                  </div>
+              
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0">Product Name: <?php echo $row1['prod_name']; ?> </p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0">Amount: <?php echo $row1['price']; ?> </p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0">Status: <?php echo $n; ?> </p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0">Qty: <?php echo $row1['quantity']; ?></p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0">Total: &#x20B9; <?php echo $row1['totalamount']; ?></p>
+                  </div>
+                  <div>
+                  <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
+                  </div>
+                  <?php
+                  }
+                  }
+                  ?>
+              </div>
+            </div>
+        </div>
       </div>
     </div>
-    <br />
   </div>
-  </div>
-</form>
-</body>
-<script>
+</section>
 
-// var val= document.getElementById("totamt").value=total;
-  
-       
 
-</script>
+               <script src="js/jquery.min.js"></script>
+      <script src="js/popper.min.js"></script>
+      <script src="js/bootstrap.bundle.min.js"></script>
+      <script src="js/jquery-3.0.0.min.js"></script>
+      <script src="js/plugin.js"></script>
+      <!-- sidebar -->
+      <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+      <script src="js/custom.js"></script>
+      <script>
+         function openNav() {
+           document.getElementById("mySidenav").style.width = "250px";
+         }
+         
+         function closeNav() {
+           document.getElementById("mySidenav").style.width = "0";
+         }
+      </script>
+
+               </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-

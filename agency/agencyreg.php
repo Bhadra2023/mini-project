@@ -17,32 +17,7 @@ $phone=$_POST['phone'];
 $email = $_POST['email'];
 $pswd = $_POST['password'];
 $type=4;
-// if(!preg_match("/^[a-zA-Z]+$/", $seller_name)){
-//   echo"<script>alert('Enter correct name');window.location='index.html'</script>";
-// }
-// if(!preg_match("/^[a-zA-Z0-9\s\,\''\-]*$/", $seller_addr)){
-//   echo"<script>alert('Enter valid address');window.location='index.html'</script>";
-// }
-
-// if(!preg_match("/^[6789][0-9]{9}$/", $seller_phn)){
-//   echo"<script>alert('Enter valid phone no');window.location='index.html'</script>";
-// }
-
-// if(!preg_match("/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/", $email)){
-//   echo"<script>alert('Enter valid email address');window.location='index.html'</script>";
-// }
-
-// $uppercase = preg_match('@[A-Z]@', $pswd);
-// $lowercase = preg_match('@[a-z]@', $pswd);
-// $number    = preg_match('@[0-9]@', $pswd);
-// $specialChars = preg_match('@[^\w]@', $pswd);
-
-// if(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($pswd) < 8) {
-//   echo"<script>alert('Enter valid password');window.location='index.html'</script>";
-// }
-// if($pswd != $cnfm_pswd){
-//   echo"<script>alert('Passwords doesn't match');window.location='index.html'</script>";
-// }
+// exit;
 $check_email = mysqli_query($conn, "SELECT email FROM `tbl_courier` where email = '$email' ");
 if(mysqli_num_rows($check_email) > 0){
   echo"<script>alert('Email Already exists');
@@ -51,7 +26,7 @@ if(mysqli_num_rows($check_email) > 0){
 else{
  $a = "INSERT INTO tbl_courier (`agencyname`,`district`,`phone`,`email`,`password`) VALUES ('$agencyname','$district','$phone','$email','$pswd')";
  $sql=mysqli_query($conn,$a);
-$id = mysqli_insert_id($conn);
+// $id = mysqli_insert_id($conn);
  $sql1 = "INSERT INTO `tbl_login` (`email`,`password`,`type`) VALUES ('$email','$pswd','$type')";
 
  $qry = mysqli_query($conn,$sql1);
@@ -91,7 +66,7 @@ $conn->close();
             <!-- <img src="images/sell-bg.jpg" alt=""> -->
             <div class="container">
                 <div class="signup-content">
-                    <form method="POST" id="signup-form" class="signup-form" action="../login/login.php">
+                    <form method="POST" id="signup-form" class="signup-form" action="">
                         <h2 class="form-title">Create account</h2>
                         <div class="form-group">
                             <input type="text" class="form-input" name="name" id="name" placeholder="AgencyName" required onkeyup="validateName()" autocomplete="off"/>

@@ -14,9 +14,10 @@ $conn=mysqli_connect("localhost","root","","jewel");
 // echo $id;
 // exit;
  if($_GET['emp_id']){
+    // echo $id=$_GET['emp_id']; exit;
      $id=$_GET['emp_id'];
-  
- } 
+ }
+
 if(isset($_POST['buttonsubmit']))
 {
     $empid=$_POST['emp_id'];
@@ -28,11 +29,12 @@ if(isset($_POST['buttonsubmit']))
     {
 //  echo "Job assigned successfully";
  echo "<script>alert('Job assigned Successfully!!');
- window.location='empjob.php'</script>";
+ window.location='employeeview.php'</script>";
 
  }
 
  }
+// }
 ?>
 <!DOCTYPE html>
 <head>
