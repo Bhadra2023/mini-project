@@ -96,7 +96,7 @@ if(!isset($email)){
     <img id="glasses1" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.0.1/examples/face-tracking/assets/glasses/thumbnail.png"/>
     <img id="glasses2" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.0.1/examples/face-tracking/assets/glasses2/thumbnail.png"/>
     <img id="earring" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.0.1/examples/face-tracking/assets/earring/thumbnail.png"/>
-    <img id="earring2" src="../Admin/photo/<?php echo $row['photo'] ?>"/>
+    <img id="earring2" src="../Admin/photo/<?php echo $row['photo'] ?>/>
 
       </div>
 
@@ -108,7 +108,7 @@ if(!isset($email)){
           <a-asset-item id="hatModel" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.0.1/examples/face-tracking/assets/hat/scene.gltf"></a-asset-item>
           <a-asset-item id="hatModel2" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.0.1/examples/face-tracking/assets/hat2/scene.gltf"></a-asset-item>
           <a-asset-item id="earringModel" src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.0.1/examples/face-tracking/assets/earring/scene.gltf"></a-asset-item>
-          <a-asset-item id="earringModel2" src="../Admin/photo/<?php echo $row['photo'] ?>"/></a-asset-item>
+          <a-asset-item id="earringModel2" src="../Admin/photo/<?php echo $row['photo'] ?>/></a-asset-item>
         </a-assets>
 
         <a-camera active="false" position="0 0 0"></a-camera>

@@ -283,10 +283,10 @@ if($res2){
         Add to Cart
       </button>
       </form>
-      <!-- <div class="buy_bt">&nbsp;&nbsp;<img src="images/cam3.png" width="25px" height="25px"><a href="Face_threejs.html">
-TRY ON</a></div> -->
-<div class="buy_bt">&nbsp;&nbsp;<img src="images/cam3.png" width="25px" height="25px"><a href='cam.php?pid="<?php echo $row['pid'];?>"'>
+      <div class="buy_bt">&nbsp;&nbsp;<img src="images/cam3.png" width="25px" height="25px"><a href="Face_threejs.html">
 TRY ON</a></div>
+<!-- <div class="buy_bt">&nbsp;&nbsp;<img src="images/cam3.png" width="25px" height="25px"><a href='cam.php?pid="<?php echo $row['pid'];?>"'>
+TRY ON</a></div> -->
 <div class="seemore_bt"><a style='color:#090' href='viewmore.php?pid="<?php echo $row['pid'];?>"'>View More</a></div>
 
                               </div>
