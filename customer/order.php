@@ -220,7 +220,7 @@ $sql1 = mysqli_query($conn,"SELECT a.*,b.* FROM `tbl_order` as a INNER JOIN `tbl
 
                   $a=$row1['orderstatus'];
         if($a==1){
-          $n =  "<div style=\"color: red;\">Out of Delivery</div>";
+          $n =  "<div style=\"color: red;\">Out for Delivery</div>";
         // $n="Out of Delivery";
       
       }else{

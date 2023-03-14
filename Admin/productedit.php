@@ -119,7 +119,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <span>Reports</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="#">Sales</a></li>
+                        <li><a href="orderview">Sales</a></li>
                         
                     </ul>
                 </li>

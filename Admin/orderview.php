@@ -1,12 +1,15 @@
-<!--A Design by W3layouts
-Author: W3layout
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
+<?php
+include "config.php";
+session_start();
+$email= $_SESSION['email'];
+if(!isset($email)){
+  session_destroy();
+  header('location:../login/login.php');
+}
+?>
 <!DOCTYPE html>
 <head>
-<title>Jewel</title>
+<title>jewel</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Visitors Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -33,8 +36,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--logo start-->
 <div class="brand">
 
-    <a href="index.php" class="logo">
-    Jewel
+    <a href="index.html" class="logo">
+        Admin Panel
     </a>
     <div class="sidebar-toggle-box">
         <div class="fa fa-bars"></div>
@@ -60,8 +63,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu extended logout">
-                
-                <li><a href="../login/login.php"><i class="fa fa-key"></i> Log Out</a></li>
+            <li><a href="../login/login.php"><i class="fa fa-key"></i> Log Out</a></li>
             </ul>
         </li>
         <!-- user login dropdown end -->
@@ -84,8 +86,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </a>
                 </li>
                 
-              
-                
+             
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-th"></i>
@@ -95,11 +96,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     li><a href="employeeview.php">Employee</a></li>
                         <li><a href="request.php">employee leave request</a></li>
 						<li><a href="categoryview.php">Category</a></li>
-						<li><a href="subcategoryview.php">SubCategory</a></li>
+                        <li><a href="subcategoryview.php">subCategory</a></li>
 						<li><a href="productvieww.php">Product</a></li>
                     </ul>
                 </li>
               
+                
                 
                 <li class="sub-menu">
                     <a href="javascript:;">
@@ -120,83 +122,82 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </aside>
 <!--sidebar end-->
 <!--main content start-->
+
+      
+<!--sidebar end-->
+<!--main content start-->
 <section id="main-content">
 	<section class="wrapper">
-	<div class="form-w3layouts">
-        <!-- page start-->
-        <!-- page start-->
-        <div class="row">
-            <div class="col-lg-12">
-                    <section class="panel">
-                        <header class="panel-heading">
-                            Add Subcategory
-                        </header>
-                        <div class="panel-body">
-                            <div class="position-center">
-                                <form role="form" action="subaction.php" method="post" enctype="multipart/form-data">
-                                    <div class="form-group">
-                                        <label for="name">Name of Subcategory</label>
-                                        <input type="text" class="form-control" name="name" id="name" placeholder="Enter Name" required onkeyup="return Validstr();"/>
-                                    </div>
-                                    <span id="msg1" style="color:red;"></span>
-                    <script>
-                        function Validstr() 
-                        {
-                        var val = document.getElementById('name').value;
-                        if (!val.match(/^[a-zA-Z ]*$/)) 
-                        {
-                          document.getElementById('msg1').innerHTML="Only alphabets are allowed";
-                                document.getElementById('name').value = "";
-                                  return false;
-                        }
-                          document.getElementById('msg1').innerHTML=" ";
-                         return true;
-                        }
-                   </script>
-                                    <div class="form-group">
-                            <?php
-$conn=mysqli_connect("localhost","root","","jewel");
-
-
-$sql=mysqli_query($conn,"select * from tbl_cat"); 
-?>
-<label>Category Name</label><br>
-
-     
-<select   name="cid" onchange="showResult(this.value)" class="form-control m-bot15" required >
-<option value="">--select--</option>
-<?php
-while($row=mysqli_fetch_array($sql))
-{
-
-?>
-<option value="<?php echo $row[0] ?>" ><?php echo $row[1] ?></option>
-<?php
-	
-}
-?>
-
-</select></div><br>
-
-                                <button type="submit" name="btnsubmit"class="btn btn-info">Submit</button>
-                            </form>
-                            </div>
-
-                        </div>
-                    </section>
-
-            </div>
-            <div class="col-lg-12">
-               
-            </div>
-        </div>
-        <div class="row">
+		<div class="table-agile-info">
+        <!-- <form action="product.php" method="post">
+        <input type="submit" name="btnsubmit" value="Add New" class="btn btn-primary" style="margin-left:2%; background-color:#126e08; " /> -->
+ <div class="panel panel-default">
+    <div class="panel-heading">
+    Product Orders
+    </div>
+    <div>
+      <table class="table" ui-jq="footable" ui-options='{
+        "paging": {
+          "enabled": true
+        },
+        "filtering": {
+          "enabled": true
+        },
+        "sorting": {
+          "enabled": true
+        }}'>
+        <thead>
+          <tr>
+            <th data-breakpoints="xs">SLNO</th>
+            <th>Customer Name</th>
+            <th>Product Name</th>
+            <th>Image</th>
+            <th>Date</th>
+            <th>Total Price</th>
+            <th>Quantity</th>
             
-        </div>
+   <!-- <th style="color:#F00">Status</th>-->
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-expanded="true">
+         
+<?php
+$s=1;
 
-        
+$sql1 = mysqli_query($conn,"SELECT a.*,b.*,c.* FROM `tbl_order` as a INNER JOIN `tbl_product` as b INNER JOIN `tbl_customer` as c ON a.pid=b.pid and a.cust_id=c.cust_id");
+
+
+
+if($sql1->num_rows>0){
+    while($row1 = mysqli_fetch_array($sql1)){?>
+        <tr>
+        <td><?php echo $s++ ?></td>
+        <td><?php echo $row1["name"];?></td>
+        <td><?php echo $row1["prod_name"];?></td>
+        <td><img src="photo/<?php echo $row1['photo'];?>" width='100' height='50'></td>
+        <td><?php echo $row1["date"];?></td>
+        <td><?php echo $row1["totalamount"];?></td>
+        <td><?php echo $row1["quantity"];?></td>
+        </tr>
+
+<?php	
+  }
+
+}
+
+?>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</form>
+</div>
+</section>
  <!-- footer -->
-		 
+		  
   <!-- / footer -->
 </section>
 
